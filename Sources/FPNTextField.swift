@@ -140,7 +140,9 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
         phoneCodeTextField.addTarget(self, action: #selector(didEditCountryCode), for: .editingChanged)
         
         if !manualPhoneCode {
-            phoneCodeTextField.addTarget(self, action: #selector(displayCountries), for: .touchUpInside)
+            phoneCodeTextField.addTarget(self, action: #selector(displayCountries), for: .touchDown)
+        } else {
+            phoneCodeTextField.removeTarget(self, action: #selector(displayCountries), for: .touchDown)
         }
         
         phoneCodeTextField.delegate = self
@@ -256,6 +258,7 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
     private func fpnDidSelect(country: FPNCountry) {
         (delegate as? FPNTextFieldDelegate)?.fpnDidSelectCountry(name: country.name, dialCode: country.phoneCode, code: country.code.rawValue)
         selectedCountry = country
+        self.becomeFirstResponder()
     }
 
     // - Public
