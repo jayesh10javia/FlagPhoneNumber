@@ -134,10 +134,15 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
 
     private func setupPhoneCodeTextField() {
         phoneCodeTextField.font = font
-        phoneCodeTextField.isUserInteractionEnabled = manualPhoneCode ? true : false
+        phoneCodeTextField.isUserInteractionEnabled = true
         phoneCodeTextField.translatesAutoresizingMaskIntoConstraints = false
         
         phoneCodeTextField.addTarget(self, action: #selector(didEditCountryCode), for: .editingChanged)
+        
+        if !manualPhoneCode {
+            phoneCodeTextField.addTarget(self, action: #selector(displayCountries), for: .touchUpInside)
+        }
+        
         phoneCodeTextField.delegate = self
         phoneCodeTextField.keyboardType = .phonePad
     }
@@ -183,7 +188,7 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
     }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return range.location != 0;
+        return range.location != 0 && manualPhoneCode;
     }
     
     open override func updateConstraints() {
