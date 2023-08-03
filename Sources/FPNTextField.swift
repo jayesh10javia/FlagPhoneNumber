@@ -193,6 +193,10 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
         return range.location != 0 && manualPhoneCode;
     }
     
+    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return manualPhoneCode
+    }
+    
     open override func updateConstraints() {
         super.updateConstraints()
 
@@ -258,6 +262,9 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
     private func fpnDidSelect(country: FPNCountry) {
         (delegate as? FPNTextFieldDelegate)?.fpnDidSelectCountry(name: country.name, dialCode: country.phoneCode, code: country.code.rawValue)
         selectedCountry = country
+        
+        // Transfer focus back to the main field
+        phoneCodeTextField.resignFirstResponder()
         self.becomeFirstResponder()
     }
 
