@@ -139,12 +139,6 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
         
         phoneCodeTextField.addTarget(self, action: #selector(didEditCountryCode), for: .editingChanged)
         
-        if !manualPhoneCode {
-            phoneCodeTextField.addTarget(self, action: #selector(displayCountries), for: .touchDown)
-        } else {
-            phoneCodeTextField.removeTarget(self, action: #selector(displayCountries), for: .touchDown)
-        }
-        
         phoneCodeTextField.delegate = self
         phoneCodeTextField.keyboardType = .phonePad
     }
@@ -194,7 +188,13 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
     }
     
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return manualPhoneCode
+        if !manualPhoneCode, textField == self.phoneCodeTextField {
+            displayCountries()
+            
+            return false
+        }
+        
+        return true
     }
     
     open override func updateConstraints() {
