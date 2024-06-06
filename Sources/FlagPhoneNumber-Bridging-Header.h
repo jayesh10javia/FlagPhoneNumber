@@ -12,5 +12,7 @@
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneNumber.h"
 #import "NBAsYouTypeFormatter.h"
+#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumber.h"
 
 #endif /* FlagPhoneNumber_Bridging_Header_h */
