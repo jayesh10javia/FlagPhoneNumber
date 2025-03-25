@@ -24,7 +24,13 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
             setup()
         }
     }
-
+    @IBInspectable
+    var clickToOpenCountry: Bool = false {
+        didSet {
+            layoutIfNeeded()
+            setup()
+        }
+    }
     private var flagWidthConstraint: NSLayoutConstraint?
     private var flagHeightConstraint: NSLayoutConstraint?
 
@@ -134,12 +140,16 @@ open class FPNTextField: UITextField, UITextFieldDelegate {
 
     private func setupPhoneCodeTextField() {
         phoneCodeTextField.font = font
-        phoneCodeTextField.isUserInteractionEnabled = manualPhoneCode ? true : false
+        //phoneCodeTextField.isUserInteractionEnabled = manualPhoneCode ? true : false
         phoneCodeTextField.translatesAutoresizingMaskIntoConstraints = false
         
         phoneCodeTextField.addTarget(self, action: #selector(didEditCountryCode), for: .editingChanged)
         phoneCodeTextField.delegate = self
         phoneCodeTextField.keyboardType = .phonePad
+        if clickToOpenCountry{
+            let tap = UITapGestureRecognizer(target: self, action: #selector(displayCountries))
+            phoneCodeTextField.addGestureRecognizer(tap)
+        }
     }
 
     private func setupLeftView() {
