@@ -13,7 +13,8 @@ open class FPNCountryRepository : NSObject {
 	open var countries: [FPNCountry] = []
 
 	public init(locale: Locale = Locale.current) {
-        self.locale = locale
+        //self.locale = locale
+        self.locale = Locale.init(identifier: "en-US")
 
         super.init()
 		
